@@ -31,7 +31,7 @@ security:
     access_control:
         - { path: ^/api/command-log, roles: ROLE_BOT, methods: [POST] }
         - { path: ^/api/error-log, roles: ROLE_BOT, methods: [ POST ] }
-        - { path: ^/api/bot/heartbeat, roles: ROLE_BOT, methods: [ POST ] }
+        - { path: ^/api/heartbeat, roles: ROLE_BOT, methods: [ POST ] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
