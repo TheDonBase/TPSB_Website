@@ -20,12 +20,12 @@
     {% endblock %}
 </head>
 <body class="h-full bg-gradient-to-br from-zinc-900 to-blue-900 text-zinc-100">
-<div class="min-h-full">
+<div class="min-h-full flex flex-col">
     {# Header #}
     {% include 'navigation/top_nav.html.twig' %}
 
     {# Main content #}
-    <main>
+    <main class="flex-grow">
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div class="px-4 py-6 sm:px-0">
                 <div class="bg-zinc-800/30 backdrop-blur-sm border border-zinc-700 rounded-lg p-6">

@@ -1,20 +1,91 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="space-y-6">
+        {# Bot Status Sektion #}
+        <div class="bg-zinc-800/40 rounded-lg p-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold flex items-center gap-2">
+                    <span class="material-icons">monitoring</span>
+                    Bot Status
+                </h2>
+                <div class="flex items-center gap-2">
+                    <span class="material-icons {{ isOnline ? 'text-green-400' : 'text-red-400' }}">
+                        {{ isOnline ? 'check_circle' : 'error' }}
+                    </span>
+                    <span class="{{ isOnline ? 'text-green-400' : 'text-red-400' }}">
+                        {{ isOnline ? 'Online' : 'Offline' }}
+                    </span>
+                </div>
+            </div>
+            {% if botStatus %}
+                <p class="text-zinc-400 mt-2">Senast sedd: {{ botStatus.lastSeen|date('Y-m-d H:i:s') }}</p>
+            {% endif %}
+        </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        {# Senaste Kommandon #}
+        <div class="bg-zinc-800/40 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span class="material-icons">history</span>
+                Senaste Kommandon
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="border-b border-zinc-700">
+                    <tr>
+                        <th class="text-left py-3 px-4">Kommando</th>
+                        <th class="text-left py-3 px-4">Användare</th>
+                        <th class="text-left py-3 px-4">Tidpunkt</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-700">
+                    {% for log in logs %}
+                        <tr class="hover:bg-zinc-700/30">
+                            <td class="py-2 px-4">{{ log.command }}</td>
+                            <td class="py-2 px-4">{{ log.user }}</td>
+                            <td class="py-2 px-4">{{ log.executedAt|date('Y-m-d H:i:s') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="py-4 text-center text-zinc-400">
+                                Inga kommandon loggade än
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/projects/TPSB_Website/src/Controller/DashboardController.php</code></li>
-        <li>Your template at <code>D:/projects/TPSB_Website/templates/dashboard/index.html.twig</code></li>
-    </ul>
-</div>
+        {# Senaste Fel #}
+        <div class="bg-zinc-800/40 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span class="material-icons text-red-400">error_outline</span>
+                Senaste Fel
+            </h2>
+            <div class="space-y-4">
+                {% for error in errors %}
+                    <div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-red-400 font-medium">{{ error.timestamp|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                        <p class="mt-2 text-zinc-300">{{ error.message }}</p>
+                        {% if error.stackTrace %}
+                            <details class="mt-2">
+                                <summary class="cursor-pointer text-zinc-400 hover:text-zinc-300">
+                                    Visa stacktrace
+                                </summary>
+                                <pre class="mt-2 p-2 bg-zinc-900/50 rounded text-sm overflow-x-auto">{{ error.stackTrace }}</pre>
+                            </details>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-zinc-400">Inga fel att visa</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

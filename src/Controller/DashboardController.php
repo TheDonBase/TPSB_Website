@@ -24,7 +24,10 @@ final class DashboardController extends AbstractController
         $errors = $errRepo->findBy([], ['timestamp' => 'DESC'], 5);
 
         return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+            'botStatus' => $botStatus,
+            'isOnline' => $isOnline,
+            'logs' => $logs,
+            'errors' => $errors,
         ]);
     }
 
