@@ -9,6 +9,13 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        api:
+            pattern: ^/api/
+            security: true
+            stateless: true
+            custom_authenticator: App\Security\ApiKeyAuthenticator
+
         main:
             lazy: true
             provider: users_in_memory

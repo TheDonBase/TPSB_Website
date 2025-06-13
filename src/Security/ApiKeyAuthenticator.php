@@ -24,12 +24,16 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return str_starts_with($request->getPathInfo(), '/api/');
+        $isApiRoute = str_starts_with($request->getPathInfo(), '/api/');
+        error_log('API Route check: ' . $request->getPathInfo() . ' - Is API: ' . ($isApiRoute ? 'true' : 'false'));
+        return $isApiRoute;
     }
 
     public function authenticate(Request $request): Passport
     {
         $apiKey = $request->headers->get('X-API-Key');
+        error_log('Received API Key: ' . ($apiKey ? 'present' : 'missing'));
+
         if (null === $apiKey) {
             throw new CustomUserMessageAuthenticationException('No API key provided');
         }
