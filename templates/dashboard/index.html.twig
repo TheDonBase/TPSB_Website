@@ -22,7 +22,7 @@
                 </div>
             </div>
             {% if botStatus %}
-                <p class="text-zinc-400 mt-2">Senast sedd: {{ botStatus.lastSeen|date('Y-m-d H:i:s') }}</p>
+                <p class="text-zinc-400 mt-2">Last Seen: {{ botStatus.lastSeen|date('Y-m-d H:i:s') }}</p>
             {% endif %}
         </div>
 
@@ -30,15 +30,15 @@
         <div class="bg-zinc-800/40 rounded-lg p-4">
             <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
                 <span class="material-icons">history</span>
-                Senaste Kommandon
+                Last Commands
             </h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="border-b border-zinc-700">
                     <tr>
-                        <th class="text-left py-3 px-4">Kommando</th>
-                        <th class="text-left py-3 px-4">Användare</th>
-                        <th class="text-left py-3 px-4">Tidpunkt</th>
+                        <th class="text-left py-3 px-4">Command</th>
+                        <th class="text-left py-3 px-4">User</th>
+                        <th class="text-left py-3 px-4">Time</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-700">
@@ -51,7 +51,7 @@
                     {% else %}
                         <tr>
                             <td colspan="3" class="py-4 text-center text-zinc-400">
-                                Inga kommandon loggade än
+                                No Commands to show
                             </td>
                         </tr>
                     {% endfor %}
@@ -64,7 +64,7 @@
         <div class="bg-zinc-800/40 rounded-lg p-4">
             <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
                 <span class="material-icons text-red-400">error_outline</span>
-                Senaste Fel
+                Latest Errors
             </h2>
             <div class="space-y-4">
                 {% for error in errors %}
@@ -76,14 +76,14 @@
                         {% if error.stackTrace %}
                             <details class="mt-2">
                                 <summary class="cursor-pointer text-zinc-400 hover:text-zinc-300">
-                                    Visa stacktrace
+                                    Show Stack Trace
                                 </summary>
                                 <pre class="mt-2 p-2 bg-zinc-900/50 rounded text-sm overflow-x-auto">{{ error.stackTrace }}</pre>
                             </details>
                         {% endif %}
                     </div>
                 {% else %}
-                    <p class="text-center text-zinc-400">Inga fel att visa</p>
+                    <p class="text-center text-zinc-400">No errors to show</p>
                 {% endfor %}
             </div>
         </div>

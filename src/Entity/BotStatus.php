@@ -19,8 +19,8 @@ class BotStatus
     #[ORM\Column]
     private ?int $ping = null;
 
-    #[ORM\Column]
-    private ?float $version = null;
+    #[ORM\Column(length: 255)]
+    private ?string $version = null;
 
     #[ORM\Column(length: 255)]
     private ?string $currentActivity = null;
@@ -57,12 +57,12 @@ class BotStatus
         return $this;
     }
 
-    public function getVersion(): ?float
+    public function getVersion(): ?string
     {
         return $this->version;
     }
 
-    public function setVersion(float $version): static
+    public function setVersion(string $version): static
     {
         $this->version = $version;
 
