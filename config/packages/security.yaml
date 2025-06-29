@@ -29,10 +29,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/api/, roles: ROLE_BOT, methods: [ POST, PATCH, DELETE, GET ] }
         - { path: ^/api/command-log, roles: ROLE_BOT, methods: [POST] }
         - { path: ^/api/error-log, roles: ROLE_BOT, methods: [ POST ] }
         - { path: ^/api/heartbeat, roles: ROLE_BOT, methods: [ POST ] }
-        - { path: ^/api/, roles: ROLE_BOT, methods: [POST, PATCH, DELETE, GET] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
