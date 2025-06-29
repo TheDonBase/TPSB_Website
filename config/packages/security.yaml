@@ -32,6 +32,7 @@ security:
         - { path: ^/api/command-log, roles: ROLE_BOT, methods: [POST] }
         - { path: ^/api/error-log, roles: ROLE_BOT, methods: [ POST ] }
         - { path: ^/api/heartbeat, roles: ROLE_BOT, methods: [ POST ] }
+        - { path: ^/api/, roles: ROLE_BOT, methods: [POST, PATCH, DELETE, GET] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
