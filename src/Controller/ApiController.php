@@ -8,6 +8,7 @@ use App\Entity\StatTracking;
 use App\Entity\Nerve;
 use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -129,7 +130,7 @@ class ApiController extends AbstractController
     public function updateStats(
         StatTracking $username,
         Request $request,
-        Logger $logger
+        LoggerInterface $logger
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
