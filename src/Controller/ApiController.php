@@ -147,18 +147,6 @@ class ApiController extends AbstractController
         $updatedFields = [];
 
         foreach ($data as $field => $value) {
-            if (!in_array($field, $validFields)) {
-                $errors[] = "Ogiltigt fält: $field";
-                continue;
-            }
-            if (!is_int($value)) {
-                $errors[] = "Värdet för $field måste vara ett heltal";
-                continue;
-            }
-            if ($value < 0) {
-                $errors[] = "Värdet för $field kan inte vara negativt";
-                continue;
-            }
             $updatedFields[$field] = $value;
         }
 
