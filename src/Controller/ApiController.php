@@ -126,7 +126,7 @@ class ApiController extends AbstractController
         ], $stats));
     }
 
-    #[Route('/stats/{username:username}', name: 'api_stats_update', methods: ['PATCH'])]
+    #[Route('/stats/{username:username}', name: 'api_stats_update', methods: ['PATCH', 'POST'])]
     public function updateStats(
         StatTracking $username,
         Request $request,
