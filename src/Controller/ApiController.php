@@ -126,22 +126,12 @@ class ApiController extends AbstractController
 
     #[Route('/stats/{username}', name: 'api_stats_update', methods: ['PATCH'])]
     public function updateStats(
-        string $username,
+        StatTracking $username,
         Request $request,
         EntityManagerInterface $entityManager
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
-        // Sök efter existerande statistik för användarnamnet
-        $stat = $entityManager->getRepository(StatTracking::class)
-            ->findOneBy(['username' => $username]);
-
-        // Om användaren inte finns, returnera 406
-        if (!$stat) {
-            return $this->json([
-                'error' => 'Ingen statistik hittades för användaren: ' . $username
-            ], 406);
-        }
 
         // Validera inkommande data
         $errors = [];
@@ -170,40 +160,39 @@ class ApiController extends AbstractController
 
         // Uppdatera värdena som skickats in
         if (isset($updatedFields['strength'])) {
-            $stat->setStrength($updatedFields['strength']);
+            $username->setStrength($updatedFields['strength']);
         }
         if (isset($updatedFields['speed'])) {
-            $stat->setSpeed($updatedFields['speed']);
+            $username->setSpeed($updatedFields['speed']);
         }
         if (isset($updatedFields['dexterity'])) {
-            $stat->setDexterity($updatedFields['dexterity']);
+            $username->setDexterity($updatedFields['dexterity']);
         }
         if (isset($updatedFields['defense'])) {
-            $stat->setDefense($updatedFields['defense']);
+            $username->setDefense($updatedFields['defense']);
         }
 
         // Uppdatera total och tidsstämpel
-        $stat->setTotal(
-            $stat->getStrength() +
-            $stat->getSpeed() +
-            $stat->getDexterity() +
-            $stat->getDefense()
+        $username->setTotal(
+            $username->getStrength() +
+            $username->getSpeed() +
+            $username->getDexterity() +
+            $username->getDefense()
         );
-        $stat->setUpdatedAt(new \DateTimeImmutable());
+        $username->setUpdatedAt(new \DateTimeImmutable());
 
-        $entityManager->flush();
 
         // Returnera uppdaterad data
         return $this->json([
-            'id' => $stat->getId(),
-            'username' => $stat->getUsername(),
-            'strength' => $stat->getStrength(),
-            'speed' => $stat->getSpeed(),
-            'dexterity' => $stat->getDexterity(),
-            'defense' => $stat->getDefense(),
-            'total' => $stat->getTotal(),
-            'created_at' => $stat->getCreatedAt(),
-            'updated_at' => $stat->getUpdatedAt()
+            'id' => $username->getId(),
+            'username' => $username->getUsername(),
+            'strength' => $username->getStrength(),
+            'speed' => $username->getSpeed(),
+            'dexterity' => $username->getDexterity(),
+            'defense' => $username->getDefense(),
+            'total' => $username->getTotal(),
+            'created_at' => $username->getCreatedAt(),
+            'updated_at' => $username->getUpdatedAt()
         ]);
     }
 
