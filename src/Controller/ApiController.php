@@ -135,7 +135,7 @@ class ApiController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $logger->info('Updating stats for user ' . $username->getUsername());
-        $logger->debug($data);
+        $logger->debug('Request data: ' . print_r($data, true));
 
         // Validera inkommande data
         $errors = [];
