@@ -137,6 +137,10 @@ class ApiController extends AbstractController
         $logger->info('Updating stats for user ' . $username->getUsername());
         $logger->debug('Request data: ' . print_r($data, true));
 
+// Also log to PHP error log
+        error_log('Updating stats for user ' . $username->getUsername());
+        error_log('Request data: ' . print_r($data, true));
+
         // Validera inkommande data
         $errors = [];
         $validFields = ['strength', 'speed', 'dexterity', 'defense'];
