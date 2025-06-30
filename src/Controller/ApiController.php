@@ -130,29 +130,14 @@ class ApiController extends AbstractController
     public function updateStats(
         StatTracking $username,
         Request $request,
-        LoggerInterface $logger
+        EntityManagerInterface $entityManager
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
-        $logger->info('Updating stats for user ' . $username->getUsername());
-        $logger->debug('Request data: ' . print_r($data, true));
 
-// Also log to PHP error log
-        error_log('Updating stats for user ' . $username->getUsername());
-        error_log('Request data: ' . print_r($data, true));
-
-        // Validera inkommande data
-        $errors = [];
-        $validFields = ['strength', 'speed', 'dexterity', 'defense'];
-        $updatedFields = [];
-
-        foreach ($data as $field => $value) {
-            $updatedFields[$field] = $value;
-        }
-
-        if (!empty($errors)) {
-            return $this->json(['errors' => $errors], 400);
-        }
+        $updatedFields = array_map(function ($value) {
+            return $value;
+        }, $data);
 
         // Uppdatera värdena som skickats in
         if (isset($updatedFields['strength'])) {
@@ -177,6 +162,8 @@ class ApiController extends AbstractController
         );
         $username->setUpdatedAt(new \DateTimeImmutable());
 
+        $entityManager->persist($username);
+        $entityManager->flush();
 
         // Returnera uppdaterad data
         return $this->json([
