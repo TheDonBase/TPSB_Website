@@ -136,11 +136,11 @@ class ApiController extends AbstractController
         $stat = $entityManager->getRepository(StatTracking::class)
             ->findOneBy(['username' => $username]);
 
-        // Om användaren inte finns, returnera 404
+        // Om användaren inte finns, returnera 406
         if (!$stat) {
             return $this->json([
                 'error' => 'Ingen statistik hittades för användaren: ' . $username
-            ], 404);
+            ], 406);
         }
 
         // Validera inkommande data
