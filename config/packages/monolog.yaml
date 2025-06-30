@@ -42,7 +42,7 @@ when@prod:
                 action_level: error
                 handler: rotating_json
                 buffer_size: 50
-                channels: ["!event"]
+                channels: ["!event", "!doctrine", "!request", "!app"]
 
             rotating_json:
                 type: rotating_file
